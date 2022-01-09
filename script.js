@@ -2,7 +2,7 @@
 var today = moment();
 $("#currentDay").text(today.format("MMM Do, YYYY h:mm:ss a"));
 
-
+//updates the date every second, and checks to see if the hour has passed
 $(document).ready(function() {
     today = moment();
     dateUpdate();
@@ -12,7 +12,9 @@ $(document).ready(function() {
 function dateUpdate (){
 today = moment();
 $("#currentDay").text(today.format("MMM Do, YYYY h:mm:ss a"));
+//if the hour arrives then we update the rows
 if (today.format('mm:ss')== "00:00"){
+removeRows();
 setRows();
 }
 };
@@ -35,7 +37,7 @@ var times = [
 ];
 
 
-//creating the rows in the scheduler
+//creates the rows in the scheduler
 function setRows() {
 for (var i =0; i < times.length; i++) {
     //creating the row for the scheduler
@@ -76,7 +78,14 @@ for (var i =0; i < times.length; i++) {
     schedule.append(calendarRow);
     }
 }
+//removes the rows in the scheduler
+function removeRows(){
+    schedule.children().remove();
+}
+
 setRows();
+
+//saves the info for whichever time to the local storage on save button press
 $('button').on('click', function() {
     var selectedRow = $(this).parent();
     var selectedInput = selectedRow.find('input');
